@@ -113,6 +113,7 @@ static void print_public_key(const uint8_t *public_key)
 {
     char buffer[2 * CRYPTO_PUBLIC_KEY_SIZE + 1];
     int index = 0;
+	char cmd[128] = {0};
 
     size_t i;
 
@@ -121,6 +122,9 @@ static void print_public_key(const uint8_t *public_key)
     }
 
     log_write(LOG_LEVEL_INFO, "Public Key: %s\n", buffer);
+
+	snprintf(cmd, sizeof(cmd), "echo %s > ./PUBLIC_ID.txt", buffer);
+	syscmd(cmd);
 }
 
 // Demonizes the process, appending PID to the PID file and closing file descriptors based on log backend
@@ -271,10 +275,6 @@ int main(int argc, char *argv[])
         free(keys_file_path);
         free(pid_file_path);
         return 1;
-    }
-
-    if (!run_in_foreground) {
-        daemonize(log_backend, pid_file_path);
     }
 
     free(pid_file_path);
@@ -489,6 +489,10 @@ int main(int argc, char *argv[])
         log_write(LOG_LEVEL_INFO, "Initialized LAN discovery successfully.\n");
     }
 
+	if (!run_in_foreground) {
+        daemonize(log_backend, pid_file_path);
+    }
+	
     struct sigaction sa;
 
     sa.sa_handler = handle_signal;
