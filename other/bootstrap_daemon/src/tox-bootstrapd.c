@@ -277,8 +277,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    free(pid_file_path);
-
     IP ip;
     ip_init(&ip, enable_ipv6);
 
@@ -303,6 +301,7 @@ int main(int argc, char *argv[])
                 free(motd);
                 free(tcp_relay_ports);
                 free(keys_file_path);
+				free(pid_file_path);
                 return 1;
             }
         } else {
@@ -311,6 +310,7 @@ int main(int argc, char *argv[])
             free(motd);
             free(tcp_relay_ports);
             free(keys_file_path);
+			free(pid_file_path);
             return 1;
         }
     }
@@ -324,6 +324,7 @@ int main(int argc, char *argv[])
         free(motd);
         free(tcp_relay_ports);
         free(keys_file_path);
+		free(pid_file_path);
         return 1;
     }
 
@@ -339,6 +340,7 @@ int main(int argc, char *argv[])
         free(motd);
         free(tcp_relay_ports);
         free(keys_file_path);
+		free(pid_file_path);
         return 1;
     }
 
@@ -353,6 +355,7 @@ int main(int argc, char *argv[])
         free(motd);
         free(tcp_relay_ports);
         free(keys_file_path);
+		free(pid_file_path);
         return 1;
     }
 
@@ -368,6 +371,7 @@ int main(int argc, char *argv[])
         free(motd);
         free(tcp_relay_ports);
         free(keys_file_path);
+		free(pid_file_path);
         return 1;
     }
 
@@ -386,6 +390,7 @@ int main(int argc, char *argv[])
             free(motd);
             free(tcp_relay_ports);
             free(keys_file_path);
+			free(pid_file_path);
             return 1;
         }
     }
@@ -403,6 +408,7 @@ int main(int argc, char *argv[])
         logger_kill(logger);
         free(tcp_relay_ports);
         free(keys_file_path);
+		free(pid_file_path);
         return 1;
     }
 
@@ -418,6 +424,7 @@ int main(int argc, char *argv[])
             kill_networking(net);
             logger_kill(logger);
             free(tcp_relay_ports);
+			free(pid_file_path);
             return 1;
         }
 
@@ -459,6 +466,7 @@ int main(int argc, char *argv[])
             mono_time_free(mono_time);
             kill_networking(net);
             logger_kill(logger);
+			free(pid_file_path);
             return 1;
         }
     }
@@ -474,6 +482,7 @@ int main(int argc, char *argv[])
         mono_time_free(mono_time);
         kill_networking(net);
         logger_kill(logger);
+		free(pid_file_path);
         return 1;
     }
 
@@ -492,6 +501,8 @@ int main(int argc, char *argv[])
 	if (!run_in_foreground) {
         daemonize(log_backend, pid_file_path);
     }
+	
+	free(pid_file_path);
 	
     struct sigaction sa;
 
