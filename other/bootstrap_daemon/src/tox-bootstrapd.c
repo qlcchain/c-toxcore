@@ -124,7 +124,7 @@ static void print_public_key(const uint8_t *public_key)
     log_write(LOG_LEVEL_INFO, "Public Key: %s\n", buffer);
 
 	snprintf(cmd, sizeof(cmd), "echo %s > ./PUBLIC_ID.txt", buffer);
-	syscmd(cmd);
+	system(cmd);
 }
 
 // Demonizes the process, appending PID to the PID file and closing file descriptors based on log backend
